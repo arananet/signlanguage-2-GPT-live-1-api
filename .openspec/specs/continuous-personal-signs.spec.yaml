@@ -1,0 +1,35 @@
+title: "Continuous personal sign recognition"
+slug: "continuous-personal-signs"
+type: feature
+status: review
+author: "Arananet"
+created_at: "2026-09-12"
+updated_at: "2026-09-12"
+roles:
+  implementer: "@arananet"
+  reviewer: "@arananet"
+  qa: "@arananet"
+  product_owner: "@arananet"
+description: |
+  The user approved a limited, personally calibrated recognizer instead of a
+  pretrained general ASL translator. Capture hand motion locally, register three
+  examples per phrase, and match completed gestures using temporal alignment.
+  The direct mode replaces the manual image-analysis path as the default view.
+acceptance_criteria:
+  - "AC1: Direct mode tracks hands locally at at most 15 inference frames per second, never encodes or uploads camera images, and does not request microphone access."
+  - "AC2: Calibration requires three bounded examples for each of at most eight phrases. Hello, Thank you, and Nice to meet you are selectable calibration labels, not pretrained signs; selecting one preserves the other phrases' examples. Nice to meet you records nice followed by meet you as one two-hand sequence and emits the full phrase once, not separate words. Custom phrases remain available. The app and README state that it learns personal gestures from three examples, not general sign-language recognition. Per the user's persistence request, partial and complete templates survive reloads, code updates with compatible features, and mode changes in this browser's local storage. Store only phrase labels and numeric templates in a versioned, validated format; no images, audio, speech consent or armed state. Deleting a phrase deletes its saved copy. Invalid formats and storage failures show an error; incompatible data is not used for recognition."
+  - "AC3: An existing dynamic-time-warping library compares normalized temporal hand features. Unknown, short, ambiguous, and insufficiently calibrated gestures abstain. Moving gestures can complete after 700 ms of stillness; shorter tracked pauses between movements remain in one sequence. A held gesture emits at most once until hands leave the frame."
+  - "AC4: Explicit direct-mode consent authorizes sending matched phrases to GPT-Live for automatic speech. No image API is called. Disconnected speech is never queued or replayed; stop, mode exit, camera loss, hidden page, or consent withdrawal disables automatic speech."
+  - "AC5: The UI shows calibration progress, recognized phrases, limited-vocabulary status, and immediate stop controls. An untrained Hello label must not imply built-in recognition. Tracking and connection states are visible. Existing manual review and scripted examples remain separate modes."
+  - "AC6: Tests cover normalization, temporal matching, unknown/ambiguous rejection, segmentation, suppression, consent, local-only requests, camera cleanup, and desktop/mobile layout. Docs explain calibration and unverified recognition accuracy."
+test_plan:
+  - "AC1: Browser fake-camera checks verify video-only constraints and no image POST; unit-test inference scheduling."
+  - "AC2: Unit and browser tests verify three-example readiness, template bounds and clearing. Calibrate Hello, Thank you, and Nice to meet you together using distinct synthetic motions; verify each sends its own phrase and deleting one preserves the others. For Nice to meet you, use two hands with a first movement, brief tracked pause, and second movement bringing the hands together; verify no early emission and one full phrase after completion. These fixtures do not validate ASL accuracy. Verify local-storage disclosure, partial and complete restoration after reload and mode changes, persisted deletion, storage errors, and corrupt/incompatible/bounded data rejection. Reload must not start camera, connect voice, restore speech consent, or arm recognition."
+  - "AC3: Synthetic temporal fixtures test matching, unknown rejection, ambiguity, two movements separated by a brief tracked pause, stable-ending completion without hand withdrawal, and release before repeat; these are not signer accuracy measurements."
+  - "AC4: Mock Live speech transport; verify automatic output only while armed and connected, with no backlog after stop."
+  - "AC5: Browser checks exercise direct mode and mode switching, with responsive screenshots."
+  - "AC6: Run unit tests, browser tests, build and spec validation; document manual signer evaluation as outstanding."
+out_of_scope:
+  - "Pretrained ASL vocabulary, free ASL conversation, face/body grammar, and recognition across users."
+  - "Cloud template synchronization, video storage, cloud recognition, and automatic model fallback."
+implementation_skill: null

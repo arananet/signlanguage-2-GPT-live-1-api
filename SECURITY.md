@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-Security fixes are applied to the latest release line of `{{PROJECT_NAME}}`.
+Security fixes are applied to the latest release line of `signlanguage-2-GPT-live-1-api`.
 Older releases receive fixes only when explicitly flagged in the
 [CHANGELOG](CHANGELOG.md).
 
@@ -15,13 +15,11 @@ Older releases receive fixes only when explicitly flagged in the
 
 **Please do not open a public GitHub issue for security vulnerabilities.**
 
-Report vulnerabilities privately through one of these channels, in order of
-preference:
-
-1. **GitHub Private Vulnerability Reporting** — open the repository's
-   **Security** tab and click **Report a vulnerability**.
-2. **Email** — send details to `{{SECURITY_CONTACT}}`. Encrypt with the
-   project's PGP key if the report contains exploit details.
+Report vulnerabilities through [GitHub Private Vulnerability Reporting](https://github.com/arananet/signlanguage-2-GPT-live-1-api/security/advisories/new).
+Open the repository's **Security** tab and click **Report a vulnerability**.
+The maintainer must enable private vulnerability reporting in repository settings.
+If this option is unavailable, ask @arananet to enable it without publishing
+vulnerability details. No public security email is configured.
 
 ### What to include
 

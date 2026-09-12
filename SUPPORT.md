@@ -1,6 +1,6 @@
 # Support
 
-Thanks for using `{{PROJECT_NAME}}`. Here's where to go for help.
+Thanks for using `signlanguage-2-GPT-live-1-api`. Here's where to go for help.
 
 ## Quick Triage
 
@@ -36,8 +36,7 @@ This project is maintained on a best-effort basis. Typical response windows:
 
 ## Commercial Support
 
-Not currently offered. For project-specific consulting, contact
-`{{SECURITY_CONTACT}}`.
+Not currently offered.
 
 ## Funding
 

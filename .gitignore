@@ -2,6 +2,11 @@
 .env
 .env.*
 !.env.example
+/public/models/
+/public/wasm/
+/playwright-report/
+/test-results/
+/local-drafts/
 *.pem
 *.key
 *.crt
@@ -183,3 +188,5 @@ terraform.rc
 # ─── OpenSpec local state ──────────────────────────────────────────────────
 .openspec/.cache/
 .openspec/local.yaml
+
+/stuff

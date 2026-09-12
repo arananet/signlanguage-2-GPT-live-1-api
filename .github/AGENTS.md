@@ -1,4 +1,4 @@
-# AI Agent Instructions — {{PROJECT_NAME}}
+# AI Agent Instructions — signlanguage-2-GPT-live-1-api
 
 This project uses **OpenSpec** for spec-driven development.
 **No production code without a spec.** This rule applies to every AI

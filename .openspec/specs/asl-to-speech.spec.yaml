@@ -1,0 +1,85 @@
+# Feature Spec — created by scripts/openspec scaffold
+# Fill in all sections before moving status to 'review'.
+# Acceptance criteria are your definition of done — be specific.
+
+title: "ASL to speech"
+slug: "asl-to-speech"
+type: feature
+status: review
+
+author: "Arananet"
+created_at: "2026-09-12"
+updated_at: "2026-09-12"
+
+roles:
+  implementer: "@arananet"    # Who builds it — GitHub username or team
+  reviewer: "@arananet"       # Who reviews the PR
+  qa: "@arananet"             # Who validates acceptance_criteria
+  product_owner: "@arananet"  # Who approves the spec (draft → approved)
+
+description: |
+  Adapt the SignFlow webcam idea into an accessible, review-first ASL-to-speech
+  research prototype. Capture and hand tracking run locally without Google
+  Live or Gemini. Explicitly consented short frame sequences can be interpreted
+  by an OpenAI vision model, with an editable result and explicit speech action.
+  GPT-Live-1 supplies voice, not visual recognition. Do not claim validated
+  unrestricted ASL translation or replace qualified interpreters.
+
+acceptance_criteria:
+  - "AC1: Camera starts only on user action, never requests microphone access, tracks up to two hands locally with MediaPipe, and releases tracks and inference resources on stop/unmount."
+  - "AC2: Capture is bounded to a short ordered frame sequence; no image upload occurs without explicit consent and an Interpret action. Clear, stop, and cancelled requests cannot restore stale captures or results."
+  - "AC3: A server-side OpenAI vision request returns a tentative transcript or abstains; the editable transcript is never automatically spoken. Typed text remains usable without camera or recognition."
+  - "AC4: GPT-Live-1 uses its documented Live API, with explicit connect/disconnect and speech interruption controls, no microphone capture, and visible session/error status. Its instructions require literal source speech, no answering or embellishment, no backchannels, and silence after the phrase, with Thank you as an explicit example. Model compliance is not guaranteed. Never silently fall back to another speech model."
+  - "AC5: The root OpenAI key stays server-side and ignored by git. Requests are bounded, errors redact secrets, local access is restricted, and TLS verifies certificates using system trust or an explicit CA."
+  - "AC6: The responsive UI exposes capture, review, edit, speak, stop, and clear states, with accessible labels and visible privacy, experimental recognition, and AI voice disclosures."
+  - "AC7: README documents setup, API costs, data handling, model provenance, limitations, and manual ASL evaluation. Keep OpenSpec and deterministic checks; remove only unnecessary template-specific or paid AI automation."
+  - "AC8: An adjacent examples area offers sample messages for the voice-only path and attributed ASL practice references. Loading an example never uploads, connects, or speaks automatically; it resets message approval and cancels stale interpretation. Examples are not recognition accuracy claims."
+  - "AC9: A scripted conversation scenario shows one attributed sign reference per turn alongside English dialogue. External media is opt-in. Explicitly approved turn playback uses GPT-Live, remains on the selected turn, and stops on navigation or exit. It is labeled as a scripted voice demonstration, not ASL recognition or word-level synchronized translation."
+
+test_plan:
+  - "AC1: Browser tests cover permission denial, fake camera start/stop, local tracking assets, and media track cleanup. Real hands require manual validation."
+  - "AC2: Unit and browser tests check bounded frames, consent, cancellation, and stale-result protection."
+  - "AC3: Mocked server tests verify ordered images, abstention, validation, and failure handling; browser tests verify editable text and no automatic speech."
+  - "AC4: Mock documented Live events, verify approved text only, connection and interruption lifecycle, and assert the literal rendering prompt including Thank you. Run a minimal real API smoke test without camera data; distinguish prompt assertions from measured model compliance."
+  - "AC5: Server tests reject invalid inputs and untrusted origins/hosts, verify no key in responses, and check TLS configuration and resource limits."
+  - "AC6: Run TypeScript, build, and Playwright on desktop/mobile with screenshots and layout assertions."
+  - "AC7: Validate specs, inspect changed automation, and document unverified real-signer accuracy rather than invent evaluation scores."
+  - "AC8: Browser tests load sample messages, verify approval reset and no automatic requests, and check practice references and mobile layout."
+  - "AC9: Browser tests verify scenario navigation, media consent, review reset, turn playback gating, interruption, and responsive rendering without paid API calls."
+
+qa_notes: |
+  <!-- Manual QA steps, edge cases to verify, or environments to test in.
+       Leave blank if fully covered by automated tests. -->
+
+out_of_scope:
+  - "Validated continuous ASL translation, universal sign languages, and medical or emergency interpretation."
+  - "Training a new recognition model, accounts, deployment, persistent recordings, analytics, custom voices, and microphone conversation."
+
+implementation_skill: null
+  # Optional: name of the domain skill to invoke when implementing this spec.
+  # Overrides agents.implementation_skills.default in config.yaml.
+  # Examples: "frontend-pro", "backend-pro", "data-eng-pro", "devops-pro", "mobile-pro"
+
+eval_plan:
+  # Optional. Use for features that involve an AI model, agent, or LLM-backed component.
+  # Leave the block empty (or remove it) for fully deterministic features — test_plan is enough.
+  scenarios: []
+    # - ".harness/scenarios/example.scenario.yaml"
+  metrics: []
+    # - task_success        # Did the agent complete the task?
+    # - groundedness        # Are all claims traceable to the input?
+    # - tool_accuracy       # Did the agent use the right tools correctly?
+    # - refusal_accuracy    # Did the agent refuse when it should have?
+    # - latency_ms          # Wall-clock time budget
+    # - cost_estimate       # Token cost budget in USD
+
+technical_notes: |
+  Official model documentation identifies image/video as unsupported for GPT-Live-1.
+  Local landmarks do not constitute an ASL classifier. Vision suggestions are
+  experimental and must be reviewed. Preserve stuff/ as an ignored reference.
+
+linked_issues: []
+  # - "https://github.com/{{GITHUB_OWNER}}/{{PROJECT_NAME}}/issues/1"
+
+linked_prs: []
+  # - "https://github.com/{{GITHUB_OWNER}}/{{PROJECT_NAME}}/pull/1"

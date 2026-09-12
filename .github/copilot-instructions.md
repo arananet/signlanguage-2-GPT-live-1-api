@@ -1,4 +1,4 @@
-# Copilot Instructions — {{PROJECT_NAME}}
+# Copilot Instructions — signlanguage-2-GPT-live-1-api
 
 This project uses **OpenSpec** for spec-driven development. Full
 workflow: [`docs/OPENSPEC.md`](../docs/OPENSPEC.md).
