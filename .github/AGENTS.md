@@ -49,20 +49,23 @@ fact. Catch them before pushing — read the spec first.
 These four principles complement OpenSpec — `acceptance_criteria` and
 `test_plan` already enforce **Goal-Driven Execution**.
 
-**Think Before Coding**
+### Think Before Coding
+
 - State assumptions explicitly before writing code. If uncertain, ask.
 - If multiple interpretations of a spec exist, present them. Don't
   pick silently.
 - If something is unclear, stop and name what's confusing.
 
-**Simplicity First**
+### Simplicity First
+
 - Write the minimum code that satisfies each `acceptance_criteria`
   item. Nothing more.
 - No unrequested abstractions, configurability, or error handling for
   impossible scenarios.
 - If you write 200 lines and it could be 50, rewrite it.
 
-**Surgical Changes**
+### Surgical Changes
+
 - Touch only what the spec requires. Don't improve adjacent code that
   isn't broken.
 - Match existing style. Remove only orphans your own changes created.

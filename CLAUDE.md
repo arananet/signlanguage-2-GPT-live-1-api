@@ -32,8 +32,8 @@ Confirm answers before writing files. Do not invent values.
 chmod +x scripts/openspec && scripts/openspec --help >/dev/null
 ```
 
-The template ships a self-contained `scripts/openspec` (bash + coreutils
-+ git only — no `gh` extension, no Python, no yq).
+The template ships a self-contained `scripts/openspec` (bash + coreutils + git
+only — no `gh` extension, no Python, no yq).
 
 **Step 1 — Load defaults and the question schema:**
 
@@ -45,6 +45,7 @@ being applied so they can override.
 **Step 2 — Interview the user, one question at a time:**
 
 For each `required: true` question not pre-answered:
+
 1. Ask via `AskUserQuestion` (with options when the schema gives them).
 2. Wait for the answer before asking the next.
 3. After the last required question, summarise every answer in a table
@@ -105,7 +106,7 @@ with the template, do a single find-and-replace per token:
    | `{{BADGES}}` | shields.io badge line (auto-generated from `tech_stack`) | README |
    | `{{TECH_STACK}}` | Comma-separated tech list | config.yaml |
 
-3. **Generate badges from `tech_stack`:**
+1. **Generate badges from `tech_stack`:**
 
    Read `project.tech_stack` from `config.yaml`. For each comma-separated
    value, look up the matching badge from the catalog below and concatenate
@@ -114,7 +115,8 @@ with the template, do a single find-and-replace per token:
    `{{BADGES}}` line entirely.
 
    Always append the OpenSpec and License badges at the end:
-   ```
+
+   ```markdown
    ![OpenSpec](https://img.shields.io/badge/OpenSpec-enforced-blueviolet)
    ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
    ```
@@ -166,21 +168,22 @@ with the template, do a single find-and-replace per token:
    | `supabase` | `![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?logo=supabase&logoColor=white)` |
 
    If a `tech_stack` value has no catalog match, generate a generic gray badge:
-   ```
+
+   ```markdown
    ![<Value>](https://img.shields.io/badge/<Value>-gray)
    ```
 
-4. Review `.github/CODEOWNERS` — add finer-grained per-path owners as the
+2. Review `.github/CODEOWNERS` — add finer-grained per-path owners as the
    codebase grows. Default ownership is the team from `{{TEAM_NAME}}`.
 
-5. Point the user to `docs/BRANCH_PROTECTION.md` to configure required
+3. Point the user to `docs/BRANCH_PROTECTION.md` to configure required
    status checks (OpenSpec PR Check, Lint, CodeQL, gitleaks,
    dependency-review, OSSF Scorecard, DCO, Doc drift, ScanCode license
    analysis, Run tests) on the default branch. For one-command setup
    they can run `make apply-branch-protection` (requires `gh` CLI and
    admin rights on the repo).
 
-6. **Clean up template-internal specs.** Run `bash scripts/cleanup-template-specs`
+4. **Clean up template-internal specs.** Run `bash scripts/cleanup-template-specs`
    (or `make cleanup-template-specs`) to remove the design specs that
    document how this template was built — they're not relevant to the
    user's project and clutter `.openspec/specs/`.
@@ -195,9 +198,9 @@ If output is `0`, configuration is complete. Run `scripts/openspec check`
 to validate any specs that exist, then tell the user:
 
 > "OpenSpec is configured. `README.md` now describes your project.
->  Run `bash setup.sh` if you haven't — it installs the git hooks that
->  gate commits without specs. The full OpenSpec workflow lives in
->  `docs/OPENSPEC.md`."
+> Run `bash setup.sh` if you haven't — it installs the git hooks that
+> gate commits without specs. The full OpenSpec workflow lives in
+> `docs/OPENSPEC.md`."
 
 Do not write any production code until the config has no `{{` tokens.
 
@@ -208,18 +211,22 @@ Do not write any production code until the config has no `{{` tokens.
 When the user asks you to implement something new:
 
 1. **Check for an existing spec:**
+
    ```bash
    ls .openspec/specs/
    ```
+
    Look for a `<feature-slug>.spec.yaml` file matching the requested feature.
    Alternatively, run `/openspec-check` to validate current coverage.
 
 2. **If no spec exists — create one first:**
+
    ```bash
    scripts/openspec scaffold "<feature-name>"
    # or in Claude Code:
    /openspec-scaffold <feature-name>
    ```
+
    Ask the user to confirm or fill in:
    - `description`: what this does and why
    - `acceptance_criteria`: definition of done (at least one item)
@@ -344,10 +351,12 @@ OpenSpec enforces this structurally. Map each implementation step to a spec arti
 - Each AC → a verifiable code change
 - Each `test_plan` item → a written test in the same PR
 - Multi-step tasks → state a brief plan before starting:
-  ```
+
+   ```text
   [Step] → verify: [AC reference]
   [Step] → verify: [test_plan item]
   ```
+
 - Weak criteria ("make it work") → go back to the spec and sharpen the AC before coding.
 
 ---
@@ -357,22 +366,27 @@ OpenSpec enforces this structurally. Map each implementation step to a spec arti
 Every feature or bugfix implemented through OpenSpec **must** include tests. This is enforced at the spec, commit, and CI levels.
 
 ### Spec requirements
+
 - Every spec must have a `test_plan` section with at least one item before status moves to `review`.
 - `test_plan` items should map 1-to-1 with `acceptance_criteria` where possible.
 - Bugfix specs must also fill in `regression_test` with the specific file/function added.
 
 ### Implementation requirements
+
 - Write unit tests for all new logic.
 - Write integration tests for any new API endpoints, data flows, or cross-service interactions.
 - Do not merge a spec without its tests — CI blocks on missing or failing tests.
 
 ### CI gates
+
 The following CI checks are enforced (configured in `.openspec/config.yaml`):
+
 - `ci.run_tests: true` — test suite runs on every PR.
 - `ci.fail_on_test_failure: true` — failing tests block merge.
 - `ci.fail_on_missing_tests: true` — PRs with no test changes alongside source changes are flagged.
 
 ### Running tests locally
+
 ```bash
 # Use the test command configured during onboarding (testing.test_command in config.yaml)
 # Examples:
@@ -386,19 +400,23 @@ go test ./...
 ## Documentation Standards
 
 ### README.md
+
 - Always create `README.md` during first-time setup (Step 6 above).
 - Always update `README.md` when implementing a feature or fixing a bug that changes behavior or usage.
 - Keep it accurate and up to date — it is the entry point for any developer opening this repo.
 
 ### Diagrams
+
 - **Always use [Mermaid](https://mermaid.js.org/) syntax** for any diagrams (flowcharts, sequence diagrams, ERDs, etc.).
 - Mermaid renders natively on GitHub inside fenced code blocks:
-  ````
+
+   ````markdown
   ```mermaid
   graph TD
       A[Start] --> B[End]
   ```
   ````
+
 - Do **not** use image-based diagrams (PNG, SVG files, external tools) unless the user explicitly requests it.
 - Place diagrams directly in `README.md` or in the relevant spec/doc file where they add the most clarity.
 

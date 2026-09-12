@@ -30,7 +30,7 @@ npm run assets
 npm run dev
 ```
 
-Open http://localhost:3100. The stack is React, TypeScript, and Node.js.
+Open <http://localhost:3100>. The stack is React, TypeScript, and Node.js.
 Run `npm test`, `npm run test:e2e`, and `npm run build` for validation.
 Browser tests require `NODE_OPTIONS=--use-system-ca npx playwright install chromium`.
 Keep the OpenAI API key in the ignored root `.env`; never expose it in browser
@@ -67,17 +67,17 @@ within four seconds. The learned sequence maps to the full spoken phrase
 not a built-in ASL definition; a longer pause or lost hand tracking can split it.
 
 1. Select **Live recognition** and **Start camera**. Hello is initially only a
-	phrase label, not a learned sign. `0 READY` means nothing can be recognized.
+ phrase label, not a learned sign. `0 READY` means nothing can be recognized.
 2. For each of three examples, press **Record example** and perform the entire
-	gesture, including both movements where applicable. Keep hands visible during
-	the movement. A moving sequence completes after 700 ms of stillness, when
-	hands leave the frame for 350 ms, or at the four-second/60-sample bound.
+ gesture, including both movements where applicable. Keep hands visible during
+ the movement. A moving sequence completes after 700 ms of stillness, when
+ hands leave the frame for 350 ms, or at the four-second/60-sample bound.
 3. Confirm the phrase shows **3/3 Ready**. Accept automatic speech consent and
-	press **Start live**. Wait for **Connected** before signing.
+ press **Start live**. Wait for **Connected** before signing.
 4. Repeat the calibrated gesture. A match appears in the message panel and is
-	sent automatically to GPT-Live. Unrecognized gestures send nothing. Remove
-	hands from the frame between live gestures to rearm; holding a pose does not
-	repeatedly speak. **Stop live** immediately mutes and disconnects voice.
+ sent automatically to GPT-Live. Unrecognized gestures send nothing. Remove
+ hands from the frame between live gestures to rearm; holding a pose does not
+ repeatedly speak. **Stop live** immediately mutes and disconnects voice.
 
 The state line and sample meter distinguish missing calibration, waiting for
 hands, tracking, connection startup, and waiting for hand release. Longer pauses

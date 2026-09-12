@@ -155,7 +155,7 @@ Templates: `.openspec/templates/{feature,bugfix}.spec.yaml`.
 
 ## Project structure
 
-```
+```text
 .openspec/
 ├── config.yaml              # Project + CI configuration
 ├── defaults.yaml            # Personal/team defaults

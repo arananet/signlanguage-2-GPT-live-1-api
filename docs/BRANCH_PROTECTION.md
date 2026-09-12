@@ -39,8 +39,11 @@ any existing Scorecard, Go CodeQL, or Python CodeQL requirements in GitHub
 settings when applying this cleanup; local files do not update live rules.
 
 Markdown lint reads `.markdownlint-cli2.jsonc` and respects `.gitignore`.
-The configuration-loading error is fixed, but existing documentation formatting
-violations still need cleanup before that job can pass.
+Run the same version and file selection as CI locally:
+
+```bash
+npx --yes markdownlint-cli2@0.18.1 --config .markdownlint-cli2.jsonc '**/*.md' '!node_modules' '!**/CHANGELOG.md'
+```
 
 ### Reviews
 
@@ -61,14 +64,16 @@ violations still need cleanup before that job can pass.
 
 Two compatible options. Pick one; you can also enable both.
 
-**A. DCO (default — shipped with the template)**
+#### A. DCO (default — shipped with the template)
+
 - The `DCO` workflow (`.github/workflows/dco.yml`) checks every PR commit
   for a `Signed-off-by:` trailer matching the author.
 - Contributors sign off with `git commit -s`.
 - Lightweight, no key management, OSS-standard.
 - Add `DCO / DCO check` as a required status check above.
 
-**B. Signed commits (stricter — opt-in)**
+#### B. Signed commits (stricter — opt-in)
+
 - Settings → Rules → enable **Require signed commits**.
 - Protects against spoofed authorship; requires GPG/SSH key setup per
   contributor. See [GitHub's guide](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits).
