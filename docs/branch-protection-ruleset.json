@@ -41,7 +41,6 @@
           { "context": "CodeQL" },
           { "context": "Dependency review" },
           { "context": "Gitleaks" },
-          { "context": "OSSF Scorecard" },
           { "context": "ScanCode license analysis" },
           { "context": "Run tests" }
         ]

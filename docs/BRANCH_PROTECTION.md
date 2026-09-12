@@ -23,15 +23,24 @@ All of the following must pass before a PR can merge:
 - `Lint / yamllint (all YAML)`
 - `Lint / shellcheck (shell scripts)`
 - `Lint / markdownlint`
-- `CodeQL / Analyze (<language>)` — one per language in the matrix
+- `CodeQL / Analyze (javascript-typescript)`
 - `Secret Scan / Gitleaks`
 - `Dependency Review / Review new dependencies`
-- `OSSF Scorecard / Scorecard analysis` *(weekly, also blocks on schedule misses)*
 - `DCO / DCO check` *(or signed-commits — see "Commit identity" below)*
 - Any language-specific build / lint checks added by your team
 
 Enable **Require branches to be up to date before merging** so checks always
 run against the current base.
+
+Scorecard is manual-only and must not be a required merge check. Its pinned
+action currently fails to download its container from the upstream registry;
+manual execution remains affected until that dependency is repaired. Remove
+any existing Scorecard, Go CodeQL, or Python CodeQL requirements in GitHub
+settings when applying this cleanup; local files do not update live rules.
+
+Markdown lint reads `.markdownlint-cli2.jsonc` and respects `.gitignore`.
+The configuration-loading error is fixed, but existing documentation formatting
+violations still need cleanup before that job can pass.
 
 ### Reviews
 

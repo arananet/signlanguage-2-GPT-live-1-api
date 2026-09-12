@@ -1,6 +1,6 @@
 name: OSSF Scorecard
 
-# Weekly OSSF Scorecard analysis. Surfaces supply-chain regressions
+# Manual OSSF Scorecard analysis. Surfaces supply-chain regressions
 # (unsigned releases, unpinned actions, missing branch protection, etc.)
 # and publishes a public trust signal at:
 #   https://securityscorecards.dev/viewer/?uri=github.com/<owner>/<repo>
@@ -8,11 +8,6 @@ name: OSSF Scorecard
 # Docs: https://github.com/ossf/scorecard-action
 
 on:
-  branch_protection_rule:
-  schedule:
-    - cron: "27 7 * * 1"   # 07:27 UTC every Monday
-  push:
-    branches: [main, master]
   workflow_dispatch:
 
 permissions: read-all
